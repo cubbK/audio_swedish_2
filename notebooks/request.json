@@ -1,0 +1,15 @@
+{
+  "audioConfig": {
+    "audioEncoding": "LINEAR16",
+    "pitch": 0,
+    "speakingRate": 1
+  },
+  "input": {
+    "text": "Senaste gången Riksbanken sänkte räntan var i juni i år då den sänktes med 0,25 procentenheter till 2 procent. Därefter, i augusti, valde man att lämna den oförändrad. Då sa Riksbanken att man såg en viss sannolikhet för ytterligare en sänkning i år."
+  },
+  "voice": {
+    "languageCode": "sv-SE",
+    "modelName": "gemini-2.5-flash-preview-tts",
+    "name": "Achernar"
+  }
+}
