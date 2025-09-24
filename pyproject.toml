@@ -11,4 +11,5 @@ dependencies = [
     "openai-whisper>=20250625",
     "pandas>=2.3.2",
     "pip>=25.2",
+    "playwright>=1.55.0",
 ]
