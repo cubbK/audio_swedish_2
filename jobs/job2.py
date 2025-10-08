@@ -8,8 +8,22 @@ import torch
 import os
 import numpy as np
 import tarfile
+import argparse
 
-dataset_shard = "dataset-000000"
+
+def get_dataset_shard():
+    parser = argparse.ArgumentParser(description="Process audio dataset shard")
+    parser.add_argument(
+        "--dataset-shard",
+        type=str,
+        required=True,
+        help="Dataset shard name (e.g., dataset-000000)",
+    )
+    args = parser.parse_args()
+    return args.dataset_shard
+
+
+dataset_shard = get_dataset_shard()
 
 
 def transcribe_with_whisper(wav, audio_samples):
@@ -134,8 +148,6 @@ if __name__ == "__main__":
 
         segments = transcribe_with_whisper(wav, audio_samples)
         write_segments_to_files(segments, wav)
-        if i == 10:
-            break
 
     print("Creating tar archive...")
     create_tar_archive()

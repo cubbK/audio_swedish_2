@@ -21,5 +21,7 @@ RUN pip install scipy librosa
 COPY . /app
 WORKDIR /app
 
+ENV PYTHONUNBUFFERED=1
+
 # Set the entrypoint
-ENTRYPOINT ["python", "job2.py"]
+ENTRYPOINT ["python", "-u", "job2.py"]

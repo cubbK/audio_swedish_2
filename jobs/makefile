@@ -1,6 +1,6 @@
 JOB_NAME ?= dataset-000000
 PROJECT_ID ?= dan-data-eng-20-ce03
-REGION ?= europe-west4
+REGION ?= us-central1
 REPO_NAME ?= audio-jobs
 IMAGE_NAME ?= audio-swedish-job
 IMAGE_TAG ?= latest
@@ -33,5 +33,6 @@ create_job_2:
 	gcloud ai custom-jobs create \
 	--region=$(REGION) \
 	--display-name=$(JOB_NAME) \
-	--worker-pool-spec=machine-type=a2-highgpu-1g,replica-count=1,accelerator-type=NVIDIA_TESLA_A100,accelerator-count=1,container-image-uri=$(IMAGE_URI)
+	--worker-pool-spec=machine-type=a2-highgpu-1g,replica-count=1,accelerator-type=NVIDIA_TESLA_A100,accelerator-count=1,container-image-uri=$(IMAGE_URI) \
+	--args="--dataset-shard,$(JOB_NAME)"
 
