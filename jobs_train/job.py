@@ -16,11 +16,12 @@ def main():
     model_name = "canopylabs/orpheus-tts-0.1-pretrained"
 
     # Training Args
-    epochs = 1
-    batch_size = 1
+    epochs = 3
+    batch_size = 8
     pad_token = 128263
-    save_steps = 5000
+    save_steps = 1000
     learning_rate = 5.0e-5
+    gradient_accumulation_steps = 4
 
     # Ensure bf16 only when supported
     bf16_supported = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
@@ -40,7 +41,7 @@ def main():
 
     # Load dataset
     raw_ds = load_dataset(dsn, split="train", data_dir="8sidor_tokenized")
-    raw_ds = raw_ds.select(range(50))  # Take only first 50 items
+    raw_ds = raw_ds.select(range(2000))  # Take only first 2000 items
 
     print(f"Dataset loaded: {raw_ds}")
 
@@ -60,6 +61,7 @@ def main():
         learning_rate=learning_rate,
         save_total_limit=2,  # Limit checkpoints to save storage
         logging_dir=f"{checkpoint_dir}/logs",
+        warmup_ratio=0.1,
     )
 
     trainer = Trainer(

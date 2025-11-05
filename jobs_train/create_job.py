@@ -20,9 +20,17 @@ job = aiplatform.CustomContainerTrainingJob(
 )
 
 # Define the machine configuration
-machine_type = "n1-standard-4"
-accelerator_type = "NVIDIA_TESLA_T4"
+# machine_type = "n1-standard-4"
+# accelerator_type = "NVIDIA_TESLA_T4"
+# accelerator_count = 1
+
+machine_type = "a2-highgpu-1g"
+accelerator_type = "NVIDIA_TESLA_A100"
 accelerator_count = 1
+
+HF_TOKEN = os.getenv("HF_TOKEN", "your-huggingface-token-here")
+
+print(HF_TOKEN)
 
 # Submit the training job without model registration
 job.run(
@@ -31,6 +39,13 @@ job.run(
     accelerator_type=accelerator_type,
     accelerator_count=accelerator_count,
     base_output_dir=f"gs://{BUCKET_NAME}/model-output",
+    environment_variables={
+        "HF_TOKEN": HF_TOKEN,
+    },
+    boot_disk_size_gb=200,
+    sync=False,  # set to true to wait for job completion
 )
 
 print(f"Training job completed. Job name: {job.resource_name}")
+
+print(f"Monitor the job at: {job._dashboard_uri()}")
