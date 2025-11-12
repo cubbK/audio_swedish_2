@@ -24,9 +24,15 @@ job = aiplatform.CustomContainerTrainingJob(
 # accelerator_type = "NVIDIA_TESLA_T4"
 # accelerator_count = 1
 
-machine_type = "a2-highgpu-1g"
+# Use 2x A100 40GB GPUs (you have quota for up to 8 GPUs)
+machine_type = "a2-highgpu-2g"  # 2x A100 40GB
 accelerator_type = "NVIDIA_TESLA_A100"
-accelerator_count = 1
+accelerator_count = 2  # Must match the machine type
+
+# For A100 80GB (requires quota request):
+# machine_type = "a2-ultragpu-1g"
+# accelerator_type = "NVIDIA_A100_80GB"
+# accelerator_count = 1
 
 HF_TOKEN = os.getenv("HF_TOKEN", "your-huggingface-token-here")
 
@@ -43,9 +49,7 @@ job.run(
         "HF_TOKEN": HF_TOKEN,
     },
     boot_disk_size_gb=200,
-    sync=False,  # set to true to wait for job completion
+    # sync=False,  # set to true to wait for job completion
 )
 
-print(f"Training job completed. Job name: {job.resource_name}")
-
-print(f"Monitor the job at: {job._dashboard_uri()}")
+print("Training job submitted.")

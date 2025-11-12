@@ -17,6 +17,7 @@ RUN pip install openai-whisper pandas datasets[audio] huggingface_hub
 RUN pip install torchcodec --index-url=https://download.pytorch.org/whl/cu128
 RUN pip install scipy librosa
 RUN pip install "datasets>=2.14.0" "transformers>=4.30.0" "accelerate>=0.26.0" "torch>=2.0.0" "google-cloud-storage>=2.0.0" "tf-keras"
+RUN pip install accelerate
 
 
 COPY . /app
